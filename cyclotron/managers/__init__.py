@@ -1,0 +1,3 @@
+
+class CriticalOperationException(Exception):
+    pass
