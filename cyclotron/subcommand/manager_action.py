@@ -1,0 +1,3 @@
+
+class ManagerAction(object):
+    pass
