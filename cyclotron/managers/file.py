@@ -1,8 +1,9 @@
 from shutil import copy, move
 from os.path import isdir, dirname, basename, join, abspath, isfile
-from argparse import ArgumentParser
 from cyclotron.managers import CriticalOperationException
+import logging
 
+logger = logging.getLogger(__name__)
 
 class FileManager(object):
 
@@ -22,6 +23,7 @@ class FileManager(object):
         if not isdir(destination):
             raise CriticalOperationException('%s is not a valid directory' % destination)
 
+        logger.info('copying %s into %s'%(self.full_path, destination))
         copy(self.full_path, destination)
 
         return FileManager(join(destination, self.basename))
@@ -30,6 +32,7 @@ class FileManager(object):
         if not isdir(destination):
             raise IOError('%s is not a valid directory' % destination)
 
+        logger.info('moving %s into %s'%(self.full_path, destination))
         move(self.full_path, destination)
 
         return FileManager(join(destination, self.basename))
@@ -40,6 +43,7 @@ class FileManager(object):
         if destination_dir != self.dirname:
             raise CriticalOperationException('%s is not in the same directory as %s' % (destination, self.full_path))
 
+        logger.info('rename %s to %s' % (self.full_path, destination))
         move(self.full_path, destination)
 
 

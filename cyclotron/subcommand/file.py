@@ -1,6 +1,8 @@
 from cyclotron.subcommand.manager_action import ManagerAction
-from cyclotron.managers.files import FileManager
+from cyclotron.managers.file import FileManager
+import logging
 
+logger = logging.getLogger(__name__)
 
 class FileAction(ManagerAction):
 
@@ -21,14 +23,18 @@ class FileAction(ManagerAction):
     @staticmethod
     def handle_action(args):
 
-        file_manager = FileManager(args.filename)
 
-        if args.action == 'copy_into':
-           file_manager.copy_into(args.arguments[0])
-        elif args.action == 'move_into':
-            file_manager.move_into(args.arguments[0])
-        elif args.action == 'rename_to':
-            file_manager.move_into(args.arguments[0])
-        else:
-            raise Exception('%s is not a correct argument'%args.action)
+        try:
+            file_manager = FileManager(args.filename)
+            if args.action == 'copy_into':
+                file_manager.copy_into(args.arguments[0])
+            elif args.action == 'move_into':
+                file_manager.move_into(args.arguments[0])
+            elif args.action == 'rename_to':
+                file_manager.move_into(args.arguments[0])
+            else:
+                raise Exception('%s is not a correct argument'%args.action)
+        except Exception as e:
+            logger.error(e)
+
 

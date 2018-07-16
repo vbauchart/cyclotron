@@ -1,9 +1,15 @@
 import argparse
 from cyclotron.config import Configuration
 from cyclotron.subcommand.file import FileAction
+import logging
 
 
 conf = Configuration()
+conf.set_logger()
+
+
+logger = logging.getLogger('cyclotron')
+logger.info('Starting')
 
 
 parser = argparse.ArgumentParser()

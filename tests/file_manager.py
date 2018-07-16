@@ -1,5 +1,5 @@
 import unittest
-from cyclotron.managers.files import FileManager
+from cyclotron.managers.file import FileManager
 from cyclotron.managers import CriticalOperationException
 from tempfile import mkdtemp,mktemp
 from os.path import isfile, join
