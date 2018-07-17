@@ -2,6 +2,7 @@ import argparse
 from cyclotron.config import GlobalConfiguration
 from cyclotron.subcommand.file import FileAction
 from cyclotron.subcommand.log import LoggerAction
+from cyclotron.subcommand.batch import BatchAction
 from sys import argv
 import logging
 import colorlog
@@ -27,19 +28,20 @@ def init_logger(level):
     logger.addHandler(console_handler)
     logger.setLevel(getattr(logging, level.upper()))
 
-
 parser = argparse.ArgumentParser()
 parser.add_argument("--log", help="set output verbosity", default='INFO')
 subparsers = parser.add_subparsers(help='available commands')
 
 FileAction.add_subparser(subparsers)
 LoggerAction.add_subparser(subparsers)
+BatchAction.add_subparser(subparsers)
+
 args = parser.parse_args()
 
 init_logger(args.log)
-logger = logging.getLogger("cyclotron")
+logger = logging.getLogger(__name__)
 
-conf = GlobalConfiguration().get_conf()
+conf = GlobalConfiguration()
 
 logger.debug('Starting %s' % argv)
 

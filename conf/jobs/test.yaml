@@ -1,0 +1,5 @@
+jobs:
+  import:
+    source_dir: './tests/examples/import/'
+    archive_dir: './tests/examples/archive/'
+    file_pattern: 'filetoload_*.csv'
