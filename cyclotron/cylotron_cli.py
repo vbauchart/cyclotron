@@ -39,7 +39,7 @@ args = parser.parse_args()
 init_logger(args.log)
 logger = logging.getLogger("cyclotron")
 
-conf = GlobalConfiguration()
+conf = GlobalConfiguration().get_conf()
 
 logger.debug('Starting %s' % argv)
 

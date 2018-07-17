@@ -24,6 +24,8 @@ class GlobalConfiguration(object):
 
 
     def get_conf(self):
-        self.elastic_url = self.config.get('elastic', 'url')
-        self.log_level = self.config.get('logger', 'log_level')
+        #self.elastic_url = self.config.get('elastic', 'url')
+        #self.log_level = self.config.get('logger', 'log_level')
+
+        return self.conf_hash
 
