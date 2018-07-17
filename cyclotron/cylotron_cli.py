@@ -1,16 +1,15 @@
 import argparse
 from cyclotron.config import Configuration
 from cyclotron.subcommand.file import FileAction
+from cyclotron.subcommand.log import LoggerAction
+from sys import argv
 import logging
-
 
 conf = Configuration()
 conf.set_logger()
 
-
 logger = logging.getLogger('cyclotron')
-logger.info('Starting')
-
+logger.debug('Starting %s' % argv)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--verbose", help="increase output verbosity",
@@ -19,6 +18,7 @@ parser.add_argument("--verbose", help="increase output verbosity",
 subparsers = parser.add_subparsers(help='available commands')
 
 FileAction.add_subparser(subparsers)
+LoggerAction.add_subparser(subparsers)
 
 args = parser.parse_args()
 args.func(args)

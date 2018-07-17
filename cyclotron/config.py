@@ -1,13 +1,12 @@
 import ConfigParser
 import logging
 
-
-
-DEFAULT={
+DEFAULT = {
     'log_level': 'INFO',
 }
 
 logger = logging.getLogger('cyclotron')
+
 
 class Configuration(object):
 
@@ -20,17 +19,15 @@ class Configuration(object):
         self.log_level = self.config.get('logger', 'log_level')
 
     def get_locations(self):
-        return ('./cyclotron.conf','/etc/cylotron.conf')
+        return './cyclotron.conf', '/etc/cylotron.conf'
 
     def set_logger(self):
-
         logger.setLevel(logging.DEBUG)
 
         formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(name)s:%(message)s')
 
         output = logging.StreamHandler()
         output.setFormatter(formatter)
-        output.setLevel(logging.INFO)
+        output.setLevel(logging.DEBUG)
 
         logger.addHandler(output)
-

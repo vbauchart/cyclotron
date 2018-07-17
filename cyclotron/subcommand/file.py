@@ -4,6 +4,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 class FileAction(ManagerAction):
 
     @staticmethod
@@ -15,8 +16,8 @@ class FileAction(ManagerAction):
             'rename_to',
         )
         parser = subparsers.add_parser('file', help='file management')
-        parser.add_argument('filename', help='filename to handle')
         parser.add_argument('action', help='what to do with the file', choices = action_choice)
+        parser.add_argument('filename', help='filename to handle')
         parser.add_argument('arguments', help='arguments', nargs='+')
         parser.set_defaults(func=FileAction.handle_action)
 
