@@ -10,20 +10,19 @@ class FileAction(ManagerAction):
     @staticmethod
     def add_subparser(subparsers):
 
-        action_choice=(
+        action_choice = (
             'copy_into',
             'move_into',
             'rename_to',
         )
         parser = subparsers.add_parser('file', help='file management')
-        parser.add_argument('action', help='what to do with the file', choices = action_choice)
+        parser.add_argument('action', help='what to do with the file', choices=action_choice)
         parser.add_argument('filename', help='filename to handle')
         parser.add_argument('arguments', help='arguments', nargs='+')
         parser.set_defaults(func=FileAction.handle_action)
 
     @staticmethod
     def handle_action(args):
-
 
         try:
             file_manager = FileManager(args.filename)
@@ -34,8 +33,6 @@ class FileAction(ManagerAction):
             elif args.action == 'rename_to':
                 file_manager.move_into(args.arguments[0])
             else:
-                raise Exception('%s is not a correct argument'%args.action)
+                raise Exception('%s is not a correct argument' % args.action)
         except Exception as e:
             logger.error(e)
-
-
