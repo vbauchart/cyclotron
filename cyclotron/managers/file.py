@@ -6,6 +6,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+class XFile
+
+
 class FileManager(object):
     full_path = None
     dirname = None

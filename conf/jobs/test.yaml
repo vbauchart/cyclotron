@@ -3,3 +3,4 @@ jobs:
     source_dir: './tests/examples/import/'
     archive_dir: './tests/examples/archive/'
     file_pattern: 'filetoload_*.csv'
+    import_cmd: 'cat %(filename)s'
