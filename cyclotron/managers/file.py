@@ -8,47 +8,52 @@ import os
 logger = logging.getLogger(__name__)
 
 
+class FilePatternSet(object):
+
+    def __init__(self, glob_pattern, pick_order='filename'):
+        self.glob_pattern = glob_pattern
+        self.pick_order = pick_order
+        self.fileset = []
+
+        for path in glob(self.glob_pattern):
+            self.fileset.append(FileManager(path))
+
+    def pick_file(self):
+
+        if len(self.fileset) == 0:
+            raise CriticalOperationException('%s : no matching file' % self.glob_pattern)
+        elif len(self.fileset) == 1:
+            return self.fileset[0]
+        else:
+            if self.pick_order == 'filename':
+                self.fileset.sort(reverse=True)
+            elif self.pick_order == 'mtime':
+                self.fileset.sort(key=lambda x: x.full_path, reverse=True)
+            else:
+                raise Exception('%s is not a valid pick strategy' % self.pick_order)
+
+            for filemanager in self.fileset:
+                logger.debug('%s is a candidate for %s' % (filemanager.full_path, self.glob_pattern))
+
+            found_file = self.fileset[0]
+            logger.info('%s selected for pattern %s' % (found_file.full_path, self.glob_pattern))
+
+            return found_file
+
+
 class FileManager(object):
     full_path = None
     dirname = None
     basename = None
 
-    def __init__(self, glob_pattern, pick_order='filename'):
+    def __init__(self, path):
 
-        self.glob_pattern = glob_pattern
-
-        self.pick_order = pick_order
-
-        self.full_path = self.pick_file()
-
+        self.full_path = path
         self.dirname = dirname(self.full_path)
         self.basename = basename(self.full_path)
 
         if not isfile(self.full_path):
             raise CriticalOperationException('%s is not a valid file' % self.full_path)
-
-    def pick_file(self):
-
-        file_list = glob(self.glob_pattern)
-        if len(file_list) == 0:
-            raise CriticalOperationException('%s : no matching file' % self.glob_pattern)
-        elif len(file_list) == 1:
-            return file_list[0]
-        else:
-            if self.pick_order == 'filename':
-                file_list.sort(reverse=True)
-            elif self.pick_order == 'mtime':
-                file_list.sort(key=os.path.getctime, reverse=True)
-            else:
-                raise Exception('%s is not a valid pick strategy' % pick_order)
-
-            for file in file_list:
-                logger.debug('%s is a candidate for %s' % (file, self.glob_pattern))
-
-            found_file = file_list[0]
-            logger.info('%s selected for pattern %s' % (file, self.glob_pattern))
-
-            return found_file
 
     def copy_into(self, destination):
         if not isdir(destination):
