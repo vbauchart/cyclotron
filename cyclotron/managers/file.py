@@ -1,12 +1,14 @@
 from shutil import copy, move
 from os.path import isdir, dirname, basename, join, abspath, isfile
+
+from cyclotron.events.dispatcher import EventDispatcher
 from cyclotron.managers import CriticalOperationException
 import logging
 from glob import glob
 import os
 
 logger = logging.getLogger(__name__)
-
+events = EventDispatcher()
 
 class FilePatternSet(object):
 
@@ -61,6 +63,8 @@ class FileManager(object):
 
         logger.info('copying %s into %s' % (self.full_path, destination))
         copy(self.full_path, destination)
+
+        events.log_event('copying %s into %s' % (self.full_path, destination))
 
         return FileManager(join(destination, self.basename))
 

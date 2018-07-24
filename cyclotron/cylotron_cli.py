@@ -1,5 +1,6 @@
 import argparse
 from cyclotron.config import GlobalConfiguration
+from cyclotron.events.dispatcher import EventDispatcher, DummyDispatcher
 from cyclotron.subcommand.file import FileAction
 from cyclotron.subcommand.log import LoggerAction
 from cyclotron.subcommand.batch import BatchAction
@@ -29,6 +30,9 @@ def init_logger(level):
     logger.addHandler(console_handler)
     logger.setLevel(getattr(logging, level.upper()))
 
+def init_events():
+    dispatchers = EventDispatcher()
+    dispatchers.add_dispatcher(DummyDispatcher())
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--log", help="set output verbosity", default='INFO')
@@ -41,6 +45,7 @@ BatchAction.add_subparser(subparsers)
 args = parser.parse_args()
 
 init_logger(args.log)
+init_events()
 logger = logging.getLogger(__name__)
 
 conf = GlobalConfiguration()
