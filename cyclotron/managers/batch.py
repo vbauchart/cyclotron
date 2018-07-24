@@ -2,6 +2,7 @@ import logging
 import yaml
 import os
 from cyclotron.config import GlobalConfiguration
+from cyclotron.managers.file import FilePatternSet
 
 logger = logging.getLogger(__name__)
 
@@ -18,6 +19,8 @@ class BatchManager(object):
 
         with open(os.path.join(config_root, '%s.yaml' % self.job_name)) as job_conf:
             self.job_config = yaml.load(job_conf)
+
+        self.fileset = FilePatternSet(self.job_config['import']['file_pattern'])
 
     def import_file(self, file_id=None):
         print(self.job_config)

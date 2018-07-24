@@ -8,6 +8,7 @@ import logging
 import colorlog
 import os
 
+
 def init_logger(level):
     """init the logger
 
@@ -27,6 +28,7 @@ def init_logger(level):
     logger = logging.getLogger("cyclotron")
     logger.addHandler(console_handler)
     logger.setLevel(getattr(logging, level.upper()))
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--log", help="set output verbosity", default='INFO')
