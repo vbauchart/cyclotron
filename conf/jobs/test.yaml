@@ -5,10 +5,5 @@ cyclotron:
     working: ./work/working
     reject: ./work/reject
   jobs:
-    copy:
-      source_dir: './tests/examples/import/'
-      archive_dir: './tests/examples/archive/'
-      file_pattern: 'filetoload_*.csv'
-      import_cmd: 'cat %(filename)s'
-    command:
-      binary: ls
+    import:
+      command: ls

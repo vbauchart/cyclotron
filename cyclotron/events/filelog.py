@@ -1,7 +1,7 @@
-
-
 class FileLog(object):
 
     def __int__(self, file_path):
+        self.event_file = open(file_path, mode='rw')
 
-        if type(initial_file is not t
+    def log_event(self, event):
+        self.event_file.write(event)

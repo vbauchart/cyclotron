@@ -1,6 +1,7 @@
 import argparse
 from cyclotron.config import GlobalConfiguration
 from cyclotron.events.dispatcher import EventDispatcher, DummyDispatcher
+from cyclotron.events.filelog import FileLog
 from cyclotron.subcommand.file import FileAction
 from cyclotron.subcommand.log import LoggerAction
 from cyclotron.subcommand.batch import BatchAction
@@ -31,9 +32,12 @@ def init_logger(level):
     logger.setLevel(getattr(logging, level.upper()))
 
 
-def init_events():
+def init_events(file_event=None, elastic_url=None):
     dispatchers = EventDispatcher()
     dispatchers.add_dispatcher(DummyDispatcher())
+
+    if file_event is not None:
+        dispatchers.add_dispatcher(FileLog())
 
 
 parser = argparse.ArgumentParser()

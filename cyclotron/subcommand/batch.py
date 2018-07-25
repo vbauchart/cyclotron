@@ -5,7 +5,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-
 class BatchAction(ManagerAction):
 
     @staticmethod
@@ -36,3 +35,4 @@ class BatchAction(ManagerAction):
             batch_manager = BatchManager(args.jobname, create_dirs=True)
         except CriticalOperationException as e:
             logger.error(e)
+

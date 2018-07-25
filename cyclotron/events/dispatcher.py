@@ -2,9 +2,12 @@ import json
 
 
 class Event(object):
-    def __init__(self):
-        self.message = ''
+    def __init__(self, message):
+        self.message = message
         self.files = []
+
+    def __str__(self):
+        return json.dumps({'message': self.message})
 
 
 class EventDispatcher(object):
@@ -35,4 +38,10 @@ class EventDispatcher(object):
 
 class DummyDispatcher(object):
     def log_event(self, event):
-        print(json.dumps({'message': event}))
+
+        if isinstance(event, Event):
+            msg = event
+        else:
+            msg = Event(event)
+
+        print(msg)

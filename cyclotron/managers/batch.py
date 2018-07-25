@@ -2,10 +2,11 @@ import logging
 import yaml
 import os
 from cyclotron.config import GlobalConfiguration, ConfigurationException
-from cyclotron.managers.file import FilePatternSet, DirectoryManager
+from cyclotron.events.dispatcher import EventDispatcher
+from cyclotron.managers.file import DirectoryManager
 
 logger = logging.getLogger(__name__)
-
+events = EventDispatcher()
 
 class BatchManager(object):
 

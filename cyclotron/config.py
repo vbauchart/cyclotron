@@ -15,6 +15,7 @@ DEFAULT = {
     'batch': {
         'config_root': './conf/jobs/',
         'elastic_url': 'localhost',
+        'event_file': './event.log'
     },
 }
 
@@ -40,6 +41,7 @@ class GlobalConfiguration(object):
             return DEFAULT[section][option]
         else:
             return self.config.get(section, option)
+
 
 class ConfigurationException(Exception):
     pass
