@@ -33,7 +33,7 @@ class GlobalConfiguration(object):
         # self.elastic_url = self.config.get('elastic', 'url')
         # self.log_level = self.config.get('logger', 'log_level')
 
-        return DEFAULT
+        return DEFAULT.update(self.config)
 
     def get_entry(self, section, option):
 

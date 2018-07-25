@@ -3,7 +3,7 @@ import yaml
 import os
 from cyclotron.config import GlobalConfiguration, ConfigurationException
 from cyclotron.events.dispatcher import EventDispatcher
-from cyclotron.managers.file import DirectoryManager
+from cyclotron.managers.file import DirectoryManager, FilePatternSet
 
 logger = logging.getLogger(__name__)
 events = EventDispatcher()
@@ -19,6 +19,9 @@ class BatchManager(object):
         self.archive = None
         self.working = None
         self.reject = None
+
+        self.import_files = []
+        self.import_file = None
 
         config_root = self.global_config.get_entry('batch', 'config_root')
 
@@ -37,5 +40,8 @@ class BatchManager(object):
         except KeyError as e:
             raise ConfigurationException('missing job entry "cyclotron.directories.%s"' % e.message)
 
-    def import_file(self, file_id=None):
-        print(self.job_config)
+    def prepare_file(self):
+        self.import_files = FilePatternSet(self.job_config['jobs']['import']['file_pattern'])
+        self.import_file = self.import_files.pick_file()
+
+        self.import_file.mov

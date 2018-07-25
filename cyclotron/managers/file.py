@@ -1,13 +1,11 @@
-from shutil import copy, move
+import logging
+import os
+from glob import glob
 from os.path import isdir, dirname, basename, join, abspath, isfile
-
-import errno
+from shutil import copy, move
 
 from cyclotron.events.dispatcher import EventDispatcher
 from cyclotron.managers import CriticalOperationException
-import logging
-from glob import glob
-import os
 
 logger = logging.getLogger(__name__)
 events = EventDispatcher()
@@ -96,8 +94,32 @@ class DirectoryManager(object):
         self.full_path = path
 
         if not isdir(self.full_path) and create:
-            logger.info('Creating directory %s'%self.full_path)
+            logger.info('Creating directory %s' % self.full_path)
             os.makedirs(self.full_path)
 
         if not isdir(self.full_path):
             raise CriticalOperationException('%s is not a valid dir' % self.full_path)
+
+
+class XferFileMangager(FileManager):
+    def __init__(self, path):
+        self.file_manager = FileManager(path)
+        self.xfer_manager = FileManager('%s.xfer_done' % path)
+
+    def copy_into(self, destination):
+        self.file_manager.copy_into(destination)
+        self.xfer_manager.copy_into(destination)
+
+    def move_into(self, destination):
+        self.file_manager.move_into(destination)
+        self.xfer_manager.move_into(destination)
+
+    def rename_to(self, destination):
+        self.file_manager.rename_to(destination)
+        self.xfer_manager.rename_to(destination)
+
+    def check_signature(self):
+        output = []
+        with open(self.file_manager.full_path) as fd:
+            output = fd.readlines()
+
