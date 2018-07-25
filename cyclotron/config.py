@@ -40,3 +40,6 @@ class GlobalConfiguration(object):
             return DEFAULT[section][option]
         else:
             return self.config.get(section, option)
+
+class ConfigurationException(Exception):
+    pass

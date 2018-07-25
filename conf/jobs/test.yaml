@@ -1,7 +1,9 @@
 cyclotron:
-  config:
-    workdir: ./work/input
-    archives: ./work/archive
+  directories:
+    input: ./work/input
+    archive: ./work/archive
+    working: ./work/working
+    reject: ./work/reject
   jobs:
     copy:
       source_dir: './tests/examples/import/'

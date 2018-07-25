@@ -24,7 +24,6 @@ class LoggerAction(ManagerAction):
     def handle_action(args):
 
         try:
-            # logger_manager = LoggerManager()
             if args.level == 'info':
                 logger.info(' '.join(args.messages))
             elif args.level == 'error':

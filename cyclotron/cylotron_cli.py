@@ -30,9 +30,11 @@ def init_logger(level):
     logger.addHandler(console_handler)
     logger.setLevel(getattr(logging, level.upper()))
 
+
 def init_events():
     dispatchers = EventDispatcher()
     dispatchers.add_dispatcher(DummyDispatcher())
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--log", help="set output verbosity", default='INFO')

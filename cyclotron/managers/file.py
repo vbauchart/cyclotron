@@ -1,6 +1,8 @@
 from shutil import copy, move
 from os.path import isdir, dirname, basename, join, abspath, isfile
 
+import errno
+
 from cyclotron.events.dispatcher import EventDispatcher
 from cyclotron.managers import CriticalOperationException
 import logging
@@ -9,6 +11,7 @@ import os
 
 logger = logging.getLogger(__name__)
 events = EventDispatcher()
+
 
 class FilePatternSet(object):
 
@@ -85,3 +88,16 @@ class FileManager(object):
 
         logger.info('rename %s to %s' % (self.full_path, destination))
         move(self.full_path, destination)
+
+
+class DirectoryManager(object):
+
+    def __init__(self, path, create=False):
+        self.full_path = path
+
+        if not isdir(self.full_path) and create:
+            logger.info('Creating directory %s'%self.full_path)
+            os.makedirs(self.full_path)
+
+        if not isdir(self.full_path):
+            raise CriticalOperationException('%s is not a valid dir' % self.full_path)
