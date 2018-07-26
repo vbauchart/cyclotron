@@ -6,5 +6,5 @@ cyclotron:
     reject: ./work/reject
   jobs:
     import:
-      file_pattern: '{input}/filetoload_*.csv'
+      input_files: '${input}/filetoload_*.csv'
       command: 'ls {file_last}'

@@ -87,6 +87,9 @@ class FileManager(object):
         logger.info('rename %s to %s' % (self.full_path, destination))
         move(self.full_path, destination)
 
+    def __str__(self):
+        return self.full_path
+
 
 class DirectoryManager(object):
 
@@ -123,3 +126,5 @@ class XferFileMangager(FileManager):
         with open(self.file_manager.full_path) as fd:
             output = fd.readlines()
 
+    def __str__(self):
+        return self.full_path
